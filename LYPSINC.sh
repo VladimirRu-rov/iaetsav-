@@ -100,9 +100,6 @@ function provisioning_start() {
     echo "# РЕЖИМ: LIPSYNC                             #"
     echo "##############################################"
     
-    # Загрузка воркфлоу
-    download_hf "LIPSYNC.json" "$WORKSPACE/.sys_cache/workflows" "VladimirSoch/WORKFLOWS"
-
     # Основные модели и VAE
     download_hf "clip_vision_h.safetensors" "$COMFYUI_DIR/models/clip_vision"
     download_hf "umt5_xxl_fp8_e4m3fn_scaled.safetensors" "$COMFYUI_DIR/models/clip"
@@ -166,10 +163,6 @@ provisioning_start
 rm -f /.provisioning
 
 echo "=== ХЕРВАМ запускает ComfyUI ==="
-cd "${COMFYUI_DIR}"
-export TORCH_CUDNN_V8_API_ENABLED=0
-$VENV_PYTHON main.py --listen 0.0.0.0 --port 8188 --highvram --use-pytorch-cross-attention
-
 # --- ФИНАЛЬНЫЙ БАННЕР HERWAM ---
 echo "##############################################################"
 echo "#                                                            #"
@@ -198,3 +191,6 @@ echo "#   КОПИРОВАНИЕ ИЛИ ИСПОЛЬЗОВАНИЕ БЕЗ РАЗ
 echo "#   ДЛЯ СОТРУДНИЧЕСТВА ОБРАЩАТЬСЯ В TG https://t.me/vnknshn                     #"
 echo "#################################################################################"
 echo " "
+cd "${COMFYUI_DIR}"
+export TORCH_CUDNN_V8_API_ENABLED=0
+$VENV_PYTHON main.py --listen 0.0.0.0 --port 8188 --highvram --use-pytorch-cross-attention
