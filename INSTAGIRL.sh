@@ -10,6 +10,7 @@ VENV_PYTHON="/venv/main/bin/python"
 VENV_PIP="/venv/main/bin/pip"
 
 # Настройки API и Турбо-движка
+export PYTORCH_ALLOC_CONF="expandable_segments:True"
 export HF_HUB_ENABLE_HF_TRANSFER=1
 
 if [ -z "$HF_TOKEN" ]; then
@@ -21,6 +22,10 @@ echo "=== ComfyUI запускает ( ИНСТА СУЧКА ) ==="
 
 # Предварительная установка турбо-загрузчика
 $VENV_PIP install --no-cache-dir hf_transfer
+
+echo ">>> Оптимизация библиотек мониторинга и ускорение DWPose..."
+$VENV_PIP uninstall -y pynvml && $VENV_PIP install nvidia-ml-py
+$VENV_PIP install onnxruntime-gpu --extra-index-url https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/onnxruntime-cuda-12/pypi/simple/
 
 APT_PACKAGES=()
 PIP_PACKAGES=()
@@ -56,12 +61,6 @@ NODES=(
     "https://github.com/WASasquatch/was-node-suite-comfyui"
 )
 
-# --- МАССИВЫ С ПОЛНЫМИ ССЫЛКАМИ ---
-CLIP_MODELS=("https://huggingface.co/f5aiteam/CLIP/resolve/main/umt5_xxl_fp8_e4m3fn_scaled.safetensors" "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/clip_vision/clip_vision_h.safetensors")
-VAE_MODELS=("https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors")
-DETECTION_MODELS=("https://huggingface.co/Wan-AI/Wan2.2-Animate-14B/resolve/main/process_checkpoint/det/yolov10m.onnx" "https://huggingface.co/Kijai/vitpose_comfy/resolve/main/onnx/vitpose_h_wholebody_data.bin" "https://huggingface.co/Kijai/vitpose_comfy/resolve/main/onnx/vitpose_h_wholebody_model.onnx")
-UPSCALER_MODELS=("https://huggingface.co/GerbyHorty76/videoloras/resolve/main/4xUltrasharp_4xUltrasharpV10.pt")
-
 # --- ФУНКЦИИ ---
 
 # Универсальная турбо-загрузка
@@ -82,7 +81,7 @@ download_hf() {
 
     if [ ! -f "$dir/$filename" ]; then
         echo "🚀 HF Turbo Download: $filename"
-        $VENV_PYTHON -c "from huggingface_hub import hf_hub_download; hf_hub_download(repo_id='$repo_id', filename='$filename', local_dir='$dir', local_dir_use_symlinks=False, token='$HF_TOKEN')"
+       $VENV_PYTHON -c "from huggingface_hub import hf_hub_download; hf_hub_download(repo_id='$repo_id', filename='$filename', local_dir='$dir', local_dir_use_symlinks=False, token='$HF_TOKEN')" || echo "⚠️ Ошибка загрузки $filename, пропускаем..."
     fi
 }
 
@@ -201,4 +200,8 @@ echo "##########################################################################
 echo " "
 cd "${COMFYUI_DIR}"
 export TORCH_CUDNN_V8_API_ENABLED=0
+
+echo ">>> Очистка портов..."
+fuser -k 8188/tcp || true
+
 $VENV_PYTHON main.py --listen 0.0.0.0 --port 8188 --highvram --use-pytorch-cross-attention
