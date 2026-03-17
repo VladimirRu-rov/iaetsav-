@@ -59,6 +59,7 @@ NODES=(
     "https://github.com/teskor-hub/comfyui-teskors-utils"
     "https://github.com/hanjangma41/NEW-UTILSs"
     "https://github.com/WASasquatch/was-node-suite-comfyui"
+    "https://github.com/Fannovel16/ComfyUI-Frame-Interpolation.git"
 )
 # --- ФУНКЦИИ ---
 
@@ -174,6 +175,12 @@ provisioning_start
 
 rm -f /.provisioning
 
+cd "${COMFYUI_DIR}"
+export TORCH_CUDNN_V8_API_ENABLED=0
+
+echo ">>> Освобождаем порт 8188..."
+fuser -k 8188/tcp || true
+
 echo "=== ХЕРВАМ запускает ComfyUI ==="
 # --- ФИНАЛЬНЫЙ БАННЕР HERWAM ---
 echo "##############################################################"
@@ -203,10 +210,5 @@ echo "#   КОПИРОВАНИЕ ИЛИ ИСПОЛЬЗОВАНИЕ БЕЗ РАЗ
 echo "#   ДЛЯ СОТРУДНИЧЕСТВА ОБРАЩАТЬСЯ В TG https://t.me/vnknshn                     #"
 echo "#################################################################################"
 echo " "
-cd "${COMFYUI_DIR}"
-export TORCH_CUDNN_V8_API_ENABLED=0
-
-echo ">>> Освобождаем порт 8188..."
-fuser -k 8188/tcp || true
 
 $VENV_PYTHON main.py --listen 0.0.0.0 --port 8188 --highvram --use-pytorch-cross-attention
