@@ -55,6 +55,7 @@ NODES=(
     "https://github.com/hanjangma41/NEW-UTILSs"
     "https://github.com/WASasquatch/was-node-suite-comfyui"
     "https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes.git"
+    "https://github.com/ubilabs/node-image-saver.git"
 )
 
 # --- ФУНКЦИИ ---
