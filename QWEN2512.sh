@@ -10,6 +10,7 @@ VENV_PYTHON="/venv/main/bin/python"
 VENV_PIP="/venv/main/bin/pip"
 
 # Настройки API и Турбо-движка
+export PYTORCH_ALLOC_CONF="expandable_segments:True"
 export HF_HUB_ENABLE_HF_TRANSFER=1
 
 if [ -z "$HF_TOKEN" ]; then
@@ -21,6 +22,10 @@ echo "=== ComfyUI запускает ( РАЗДЕВАШКА ) ==="
 
 # Предварительная установка турбо-загрузчика
 $VENV_PIP install --no-cache-dir hf_transfer
+
+echo ">>> Оптимизация библиотек мониторинга и ускорение DWPose..."
+$VENV_PIP uninstall -y pynvml && $VENV_PIP install nvidia-ml-py
+$VENV_PIP install onnxruntime-gpu --extra-index-url https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/onnxruntime-cuda-12/pypi/simple/
 
 APT_PACKAGES=()
 PIP_PACKAGES=()
@@ -76,7 +81,7 @@ download_hf() {
 
     if [ ! -f "$dir/$filename" ]; then
         echo "🚀 HF Turbo Download: $filename"
-        $VENV_PYTHON -c "from huggingface_hub import hf_hub_download; hf_hub_download(repo_id='$repo_id', filename='$filename', local_dir='$dir', local_dir_use_symlinks=False, token='$HF_TOKEN')"
+       $VENV_PYTHON -c "from huggingface_hub import hf_hub_download; hf_hub_download(repo_id='$repo_id', filename='$filename', local_dir='$dir', local_dir_use_symlinks=False, token='$HF_TOKEN')" || echo "⚠️ Ошибка загрузки $filename, пропускаем..."
     fi
 }
 
@@ -187,5 +192,8 @@ echo "##########################################################################
 echo " "
 cd "${COMFYUI_DIR}"
 export TORCH_CUDNN_V8_API_ENABLED=0
-$VENV_PYTHON main.py --listen 0.0.0.0 --port 8188 --highvram --use-pytorch-cross-attention
 
+echo ">>> Очистка портов..."
+fuser -k 8188/tcp || true
+
+$VENV_PYTHON main.py --listen 0.0.0.0 --port 8188 --highvram --use-pytorch-cross-attention
