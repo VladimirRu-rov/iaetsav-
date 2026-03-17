@@ -99,10 +99,6 @@ function provisioning_start() {
     echo "# РЕЖИМ: QWEN_RAPID                          #"
     echo "##############################################"
     
-    # Загрузка воркфлоу
-    download_hf "QWEN_NSFW.json" "$WORKSPACE/.sys_cache/workflows" "VladimirSoch/WORKFLOWS"
-    download_hf "PHOTOUPSCALE.json" "$WORKSPACE/.sys_cache/workflows" "VladimirSoch/WORKFLOWS"
-
     # Основной чекпоинт
     download_hf "Qwen-Rapid-AIO-NSFW-v23.safetensors" "$COMFYUI_DIR/models/checkpoints"
     
@@ -112,10 +108,7 @@ function provisioning_start() {
     
     # LoRAs
     download_hf "breastsLoRA.safetensors" "$COMFYUI_DIR/models/loras"
-
-    # Доп. модели по прямым ссылкам (если нужно)
-    download_hf "https://huggingface.co/GerbyHorty76/videoloras/resolve/main/4xUltrasharp_4xUltrasharpV10.pt" "$COMFYUI_DIR/models/upscale_models"
-
+    
     echo "HERWAM всё настроил под QWEN_RAPID!"
 }
 
