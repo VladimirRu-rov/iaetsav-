@@ -59,6 +59,7 @@ NODES=(
     "https://github.com/teskor-hub/comfyui-teskors-utils"
     "https://github.com/hanjangma41/NEW-UTILSs"
     "https://github.com/WASasquatch/was-node-suite-comfyui"
+    "https://github.com/numz/ComfyUI-SeedVR2_VideoUpscaler.git"
 )
 
 # --- ФУНКЦИИ ---
@@ -164,17 +165,9 @@ function provisioning_get_nodes() {
     done
 }
 
-# !!! ИЗМЕНЕНО !!! Очистка портов перед стартом (решение Errno 98)
-echo ">>> Очистка портов..."
-fuser -k 8188/tcp || true
-
 provisioning_start
 
 rm -f /.provisioning
-
-cd "${COMFYUI_DIR}"
-export TORCH_CUDNN_V8_API_ENABLED=0
-$VENV_PYTHON main.py --listen 0.0.0.0 --port 8188 --highvram --use-pytorch-cross-attention
 
 # --- ФИНАЛЬНЫЙ БАННЕР HERWAM ---
 echo "##############################################################"
@@ -204,3 +197,12 @@ echo "#   КОПИРОВАНИЕ ИЛИ ИСПОЛЬЗОВАНИЕ БЕЗ РАЗ
 echo "#   ДЛЯ СОТРУДНИЧЕСТВА ОБРАЩАТЬСЯ В TG https://t.me/vnknshn                     #"
 echo "#################################################################################"
 echo " "
+
+cd "${COMFYUI_DIR}"
+export TORCH_CUDNN_V8_API_ENABLED=0
+
+# !!! ИЗМЕНЕНО !!! Очистка портов перед стартом (решение Errno 98)
+echo ">>> Очистка портов..."
+fuser -k 8188/tcp || true
+
+$VENV_PYTHON main.py --listen 0.0.0.0 --port 8188 --highvram --use-pytorch-cross-attention
