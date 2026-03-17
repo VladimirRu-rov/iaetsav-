@@ -98,10 +98,6 @@ function provisioning_start() {
     echo "# РЕЖИМ: CONTROL_NET                         #"
     echo "##############################################"
     
-    # Загрузка воркфлоу
-    download_hf "CONTROL_NET.json" "$WORKSPACE/.sys_cache/workflows" "VladimirSoch/WORKFLOWS"
-    download_hf "PHOTOUPSCALE.json" "$WORKSPACE/.sys_cache/workflows" "VladimirSoch/WORKFLOWS"
-
     # Модели диффузии и патчи (Controlnet Union)
     download_hf "z_image_turbo_bf16.safetensors" "$COMFYUI_DIR/models/diffusion_models"
     download_hf "Z-Image-Turbo-Fun-Controlnet-Union.safetensors" "$COMFYUI_DIR/models/model_patches"
