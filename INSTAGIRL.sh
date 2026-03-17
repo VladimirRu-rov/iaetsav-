@@ -106,10 +106,6 @@ function provisioning_start() {
     echo "# РЕЖИМ: INSTAGIRL                           #"
     echo "##############################################"
     
-    # Загрузка воркфлоу
-    download_hf "instagirl2.5.json" "$WORKSPACE/.sys_cache/workflows" "VladimirSoch/WORKFLOWS"
-    download_hf "PHOTOUPSCALE.json" "$WORKSPACE/.sys_cache/workflows" "VladimirSoch/WORKFLOWS"
-
     # Lora-пак
     download_hf "Instagirlv2.5-HIGH.safetensors" "$COMFYUI_DIR/models/loras"
     download_hf "Instagirlv2.5-LOW.safetensors" "$COMFYUI_DIR/models/loras"
