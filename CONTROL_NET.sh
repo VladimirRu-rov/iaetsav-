@@ -54,6 +54,7 @@ NODES=(
     "https://github.com/teskor-hub/comfyui-teskors-utils"
     "https://github.com/hanjangma41/NEW-UTILSs"
     "https://github.com/WASasquatch/was-node-suite-comfyui"
+    "https://github.com/ubilabs/node-image-saver.git"
 )
 # --- ФУНКЦИИ ---
 
