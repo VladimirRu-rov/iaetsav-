@@ -100,9 +100,6 @@ function provisioning_start() {
     echo "# РЕЖИМ: ANIMATOR                            #"
     echo "##############################################"
     
-    # Загрузка воркфлоу (если есть функция download_wf, иначе используем download_hf из твоего репо)
-    download_hf "ANIMATOR.json" "$WORKSPACE/.sys_cache/workflows" "VladimirSoch/WORKFLOWS"
-
     # Основные модели
     download_hf "Wan2_2-Animate-14B_fp8_scaled_e4m3fn_KJ_v2.safetensors" "$COMFYUI_DIR/models/diffusion_models"
     download_hf "wan_2.1_vae.safetensors" "$COMFYUI_DIR/models/vae"
