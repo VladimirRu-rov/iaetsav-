@@ -116,10 +116,7 @@ function provisioning_start() {
     download_hf "yolov10m.onnx" "$COMFYUI_DIR/models/detection"
     download_hf "vitpose_h_wholebody_model.onnx" "$COMFYUI_DIR/models/detection"
     download_hf "vitpose_h_wholebody_data.bin" "$COMFYUI_DIR/models/detection"
-
-    # Доп. модели по прямым ссылкам (если остались в массиве)
-    download_hf "https://huggingface.co/GerbyHorty76/videoloras/resolve/main/4xUltrasharp_4xUltrasharpV10.pt" "$COMFYUI_DIR/models/upscale_models"
-
+    
     echo "ХЕРВАМ всё настроил!"
 }
 
