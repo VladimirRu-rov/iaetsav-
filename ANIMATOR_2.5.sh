@@ -56,12 +56,6 @@ NODES=(
     "https://github.com/WASasquatch/was-node-suite-comfyui"
 )
 
-# --- МАССИВЫ С ПОЛНЫМИ ССЫЛКАМИ ---
-CLIP_MODELS=("https://huggingface.co/f5aiteam/CLIP/resolve/main/umt5_xxl_fp8_e4m3fn_scaled.safetensors" "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/clip_vision/clip_vision_h.safetensors")
-VAE_MODELS=("https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors")
-DETECTION_MODELS=("https://huggingface.co/Wan-AI/Wan2.2-Animate-14B/resolve/main/process_checkpoint/det/yolov10m.onnx" "https://huggingface.co/Kijai/vitpose_comfy/resolve/main/onnx/vitpose_h_wholebody_data.bin" "https://huggingface.co/Kijai/vitpose_comfy/resolve/main/onnx/vitpose_h_wholebody_model.onnx")
-UPSCALER_MODELS=("https://huggingface.co/GerbyHorty76/videoloras/resolve/main/4xUltrasharp_4xUltrasharpV10.pt")
-
 # --- ФУНКЦИИ ---
 
 # Универсальная турбо-загрузка
@@ -106,11 +100,6 @@ function provisioning_start() {
     echo "# РЕЖИМ: ANIMATOR 2.5                        #"
     echo "##############################################"
     
-    # Загрузка воркфлоу
-    download_hf "PHOTOUPSCALE.json" "$WORKSPACE/.sys_cache/workflows" "VladimirSoch/WORKFLOWS"
-    download_hf "ANIMATORV25NSFW.json" "$WORKSPACE/.sys_cache/workflows" "VladimirSoch/WORKFLOWS"
-    download_hf "ANIMATORV25.json" "$WORKSPACE/.sys_cache/workflows" "VladimirSoch/WORKFLOWS"
-
     # Модели и Контролнеты
     download_hf "Wan21_Uni3C_controlnet_fp16.safetensors" "$COMFYUI_DIR/models/controlnet"
     download_hf "WanModel.safetensors" "$COMFYUI_DIR/models/diffusion_models"
