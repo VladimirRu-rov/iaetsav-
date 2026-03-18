@@ -69,7 +69,7 @@ NODES=(
 download_hf() {
     local file_or_url=$1
     local dir=$2
-    local repo=${3:-"VladimirSoch/For_Work"} 
+    local repo=${3:-"VladimirSoch/What"} 
     
     mkdir -p "$dir"
     
