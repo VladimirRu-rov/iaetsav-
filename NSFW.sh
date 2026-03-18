@@ -127,10 +127,10 @@ function provisioning_start() {
     echo "##############################################"
     
     # Модели диффузии и Чекпоинты
+    download_hf "flux.safetensors" "$COMFYUI_DIR/models/vae"
     download_hf "Flux2_9b.safetensors" "$COMFYUI_DIR/models/diffusion_models"
     download_hf "Realism.safetensors" "$COMFYUI_DIR/models/checkpoints"
     download_hf "Clip.safetensors" "$COMFYUI_DIR/models/text_encoders"
-    download_hf "flux2_vae.safetensors" "$COMFYUI_DIR/models/vae"
     download_hf "face_yolov8m.pt" "$COMFYUI_DIR/models/ultralytics/bbox"
     download_hf "RealLora.safetensors" "$COMFYUI_DIR/models/loras"
     download_hf "female_breast-v4.2.pt" "$COMFYUI_DIR/models/loras"
