@@ -82,7 +82,26 @@ download_hf() {
 
     if [ ! -f "$dir/$filename" ]; then
         echo "🚀 HF Turbo Download: $filename"
-       $VENV_PYTHON -c "from huggingface_hub import hf_hub_download; hf_hub_download(repo_id='$repo_id', filename='$filename', local_dir='$dir', local_dir_use_symlinks=False, token='$HF_TOKEN')" || echo "⚠️ Ошибка загрузки $filename, пропускаем..."
+        
+        # --- БРОНЕБОЙНЫЙ ТУРБО-РЕЖИМ (3 попытки на каждый файл) ---
+        local max_retries=3
+        local attempt=1
+        local success=0
+
+        while [ $attempt -le $max_retries ]; do
+            if $VENV_PYTHON -c "from huggingface_hub import hf_hub_download; hf_hub_download(repo_id='$repo_id', filename='$filename', local_dir='$dir', local_dir_use_symlinks=False, token='$HF_TOKEN')"; then
+                success=1
+                break # Успешно скачали, выходим из цикла
+            else
+                echo "⚠️ Обрыв связи при скачивании $filename (Попытка $attempt из $max_retries). Пробуем снова через 3 секунды..."
+                attempt=$((attempt + 1))
+                sleep 3
+            fi
+        done
+
+        if [ $success -eq 0 ]; then
+            echo "❌ КРИТИЧЕСКАЯ ОШИБКА: Не удалось скачать $filename даже после $max_retries попыток. Идем дальше..."
+        fi
     fi
 }
 
