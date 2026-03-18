@@ -189,12 +189,6 @@ provisioning_start
 
 rm -f /.provisioning
 
-cd "${COMFYUI_DIR}"
-export TORCH_CUDNN_V8_API_ENABLED=0
-
-echo ">>> Очистка портов..."
-fuser -k 8188/tcp || true
-
 echo "=== ХЕРВАМ запускает ComfyUI ==="
 # --- ФИНАЛЬНЫЙ БАННЕР HERWAM ---
 echo "##############################################################"
@@ -224,5 +218,3 @@ echo "#   КОПИРОВАНИЕ ИЛИ ИСПОЛЬЗОВАНИЕ БЕЗ РАЗ
 echo "#   ДЛЯ СОТРУДНИЧЕСТВА ОБРАЩАТЬСЯ В TG https://t.me/vnknshn                     #"
 echo "#################################################################################"
 echo " "
-
-$VENV_PYTHON main.py --listen 0.0.0.0 --port 8188 --highvram --use-pytorch-cross-attention
