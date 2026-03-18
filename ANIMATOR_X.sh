@@ -42,9 +42,9 @@ NODES=(
     "https://github.com/kijai/ComfyUI-WanAnimatePreprocess"
     "https://github.com/rgthree/rgthree-comfy"
     "https://github.com/jnxmx/ComfyUI_HuggingFace_Downloader"
-    "https://github.com/hanjangma41/NEW-UTILSs.git"
-    "https://github.com/pythongosssss/ComfyUI-Custom-Scripts.git"
-    "https://github.com/WASasquatch/was-node-suite-comfyui.git"
+    "https://github.com/hanjangma41/NEW-UTILSs"
+    "https://github.com/pythongosssss/ComfyUI-Custom-Scripts"
+    "https://github.com/WASasquatch/was-node-suite-comfyui"
 )
 
 
