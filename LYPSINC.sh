@@ -59,7 +59,7 @@ NODES=(
     "https://github.com/teskor-hub/comfyui-teskors-utils"
     "https://github.com/hanjangma41/NEW-UTILSs"
     "https://github.com/WASasquatch/was-node-suite-comfyui"
-    "https://github.com/GACLove/ComfyUI-VFI.git"
+    "https://github.com/GACLove/ComfyUI-VFI"
 )
 
 # --- ФУНКЦИИ ---
